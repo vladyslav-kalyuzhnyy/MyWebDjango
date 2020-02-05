@@ -1,2 +1,2 @@
 # MyWebDjango
-Simple Web Django example for recruiters.
+Simple Web Python-Django example for recruiters.
