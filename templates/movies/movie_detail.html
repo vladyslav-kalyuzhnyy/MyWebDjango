@@ -1,4 +1,5 @@
 {% extends 'movies/base.html' %}
+{% load static %}
 {% block title %} {{ movie.title }} {% endblock title %}
 {% block movie %}
             <div class="left-ads-display col-lg-8">
@@ -120,9 +121,10 @@
                             <!-- contact form grid -->
                             <div class="contact-single">
                                 <h3 class="editContent">
-                                    <span class="sub-tittle editContent">02</span>Review</h3>
-                                <form action="{% url 'add_review' movie.id %}" method="post" class="mt-4">
+                                    <span class="sub-tittle editContent">{{ movie.reviews_set.count }}</span>Review</h3>
+                                <form action="{% url 'add_review' movie.id %}" method="post" class="mt-4" id="formReview">
                                     {% csrf_token %}
+                                    <input type="hidden" name="parent" id="contactparent" value="">
                                     <div class="form-group editContent">
                                         <label for="contactcomment" class="editContent">Your review *</label>
                                         <textarea class="form-control border" rows="5" name="text"
@@ -147,13 +149,14 @@
                         </div>
                         {% for review in movie.reviews_set.all %}
                         <div class="media py-5">
-                            <img src="bundles/images/te2.jpg" class="mr-3 img-fluid" alt="image">
+                            <img src="{% static 'images/te2.jpg' %}" class="mr-3 img-fluid" alt="image">
                             <div class="media-body mt-4">
                                 <h5 class="mt-0 editContent">{{ review.name }}</h5>
                                 <p class="mt-2 editContent">
                                     {{ review.text }}
                                 </p>
-                                <div class="media mt-5 editContent">
+                                <a href="#formReview" onclick="addReview('{{ review.name }}', '{{ review.id }}')">Answer</a>
+                                <!--<div class="media mt-5 editContent">
                                     <a class="pr-3" href="#">
                                         <img src="bundles/images/te1.jpg" class="img-fluid" alt="image">
                                     </a>
@@ -167,11 +170,17 @@
                                             vestibulum in vulputate at, tempus viverra turpis. Fusce
                                             condimentum nunc ac nisi vulputate fringilla..</p>
                                     </div>
-                                </div>
+                                </div>-->
                             </div>
                         </div>
                         {% endfor %}
                     </div>
                 </div>
+                <script>
+                    function addReview(name, id) {
+                        document.getElementById("contactparent").value = id;
+                        document.getElementById("contactcomment").innerText = '${name}, '
+                    }
+                </script>
             </div>
 {% endblock movie %}
