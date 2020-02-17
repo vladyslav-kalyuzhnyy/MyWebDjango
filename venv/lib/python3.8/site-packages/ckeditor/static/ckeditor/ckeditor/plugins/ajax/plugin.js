@@ -1,6 +1,7 @@
 ﻿/*
-Copyright (c) 2003-2011, CKSource - Frederico Knabben. All rights reserved.
-For licensing, see LICENSE.html or http://ckeditor.com/license
+ Copyright (c) 2003-2015, CKSource - Frederico Knabben. All rights reserved.
+ For licensing, see LICENSE.md or http://ckeditor.com/license
 */
-
-(function(){CKEDITOR.plugins.add('ajax',{requires:['xml']});CKEDITOR.ajax=(function(){var a=function(){if(!CKEDITOR.env.ie||location.protocol!='file:')try{return new XMLHttpRequest();}catch(f){}try{return new ActiveXObject('Msxml2.XMLHTTP');}catch(g){}try{return new ActiveXObject('Microsoft.XMLHTTP');}catch(h){}return null;},b=function(f){return f.readyState==4&&(f.status>=200&&f.status<300||f.status==304||f.status===0||f.status==1223);},c=function(f){if(b(f))return f.responseText;return null;},d=function(f){if(b(f)){var g=f.responseXML;return new CKEDITOR.xml(g&&g.firstChild?g:f.responseText);}return null;},e=function(f,g,h){var i=!!g,j=a();if(!j)return null;j.open('GET',f,i);if(i)j.onreadystatechange=function(){if(j.readyState==4){g(h(j));j=null;}};j.send(null);return i?'':h(j);};return{load:function(f,g){return e(f,g,c);},loadXml:function(f,g){return e(f,g,d);}};})();})();
+(function(){CKEDITOR.plugins.add("ajax",{requires:"xml"});CKEDITOR.ajax=function(){function g(){if(!CKEDITOR.env.ie||"file:"!=location.protocol)try{return new XMLHttpRequest}catch(a){}try{return new ActiveXObject("Msxml2.XMLHTTP")}catch(b){}try{return new ActiveXObject("Microsoft.XMLHTTP")}catch(e){}return null}function h(a){return 4==a.readyState&&(200<=a.status&&300>a.status||304==a.status||0===a.status||1223==a.status)}function i(a){return h(a)?a.responseText:null}function k(a){if(h(a)){var b=
+a.responseXML;return new CKEDITOR.xml(b&&b.firstChild?b:a.responseText)}return null}function j(a,b,e){var f=!!b,c=g();if(!c)return null;c.open("GET",a,f);f&&(c.onreadystatechange=function(){4==c.readyState&&(b(e(c)),c=null)});c.send(null);return f?"":e(c)}function l(a,b,e,f,c){var d=g();if(!d)return null;d.open("POST",a,!0);d.onreadystatechange=function(){4==d.readyState&&(f(c(d)),d=null)};d.setRequestHeader("Content-type",e||"application/x-www-form-urlencoded; charset=UTF-8");d.send(b)}return{load:function(a,
+b){return j(a,b,i)},post:function(a,b,e,f){return l(a,b,e,f,i)},loadXml:function(a,b){return j(a,b,k)}}}()})();
