@@ -29,7 +29,6 @@ class MovieShotsInline(admin.TabularInline):
     def get_image(self, obj):
         return mark_safe(f'<img src={obj.image.url} width="100" height="110"')
 
-    get_image.short_description = "MovieShots"
 
 
 @admin.register(Movie)
@@ -42,6 +41,7 @@ class MovieAdmin(admin.ModelAdmin):
     save_on_top = True
     save_as = True
     list_editable = ("draft",)
+    actions = ["publish", "unpublish"]
     form = MovieAdminForm
     readonly_fields = ("get_image",)
 
@@ -49,6 +49,33 @@ class MovieAdmin(admin.ModelAdmin):
         return mark_safe(f'<img src={obj.poster.url} width="50" height="60"')
 
     get_image.short_description = "Movie Poster"
+
+
+    def unpublish(self, request, queryset):
+        row_update = queryset.update(draft=True)
+        if row_update == 1:
+            message_bit = "One movie was updated"
+        else:
+            message_bit = f"{row_update} movies was updated"
+        self.message_user(request, f"{message_bit}")
+
+
+    def publish(self, request, queryset):
+        row_update = queryset.update(draft=False)
+        if row_update == 1:
+            message_bit = "One movie was updated"
+        else:
+            message_bit = f"{row_update} movies was updated"
+        self.message_user(request, f"{message_bit}")
+
+
+    publish.short_description = "Publish"
+    publish.allowed_permission = ('change', )
+
+    unpublish.short_description = "Unpublish"
+    unpublish.allowed_permission = ('change',)
+
+    get_image.short_description = "MovieShots"
 
 
 @admin.register(Genre)
