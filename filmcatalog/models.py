@@ -13,9 +13,6 @@ class Category(models.Model):
     def __str__(self):
         return self.name
 
-    #def get_absolute_url(self):
-        #return reverse(Category, kwargs={"slug": self.url})
-
     class Meta:
         verbose_name = 'Category'
         verbose_name_plural = 'Categories'
@@ -30,6 +27,9 @@ class Actor(models.Model):
 
     def __str__(self):
         return self.name
+
+    def get_absolute_url(self):
+        return reverse('actor', kwargs={"slug": self.name})
 
     class Meta:
         verbose_name = 'Actor'

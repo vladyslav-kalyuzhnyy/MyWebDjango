@@ -19,13 +19,17 @@
                 <li style="list-style: none">
                     <span><b>Director:</b>
                         {% for director in movie.directors.all %}
-                        {{ director.name }}
+                        <a href="{{ director.get_absolute_url }}">
+                            {{ director.name }}
+                        </a>
                         {% endfor %}
                     </span>
                 </li>
                 <li style="list-style: none"><span><b>Actors:</b>
                     {% for actor in movie.actors.all %}
-                    {{ actor.name }}
+                    <a href="{{ actor.get_absolute_url }}">
+                        {{ actor.name }}
+                    </a>
                     {% endfor %}
                 </span>
                 </li>
@@ -147,21 +151,6 @@
                     {{ review.text }}
                 </p>
                 <a href="#formReview" onclick="addReview('{{ review.name }}', '{{ review.id }}')">Answer</a>
-                <!--<div class="media mt-5 editContent">
-                                   <a class="pr-3" href="#">
-                                       <img src="bundles/images/te1.jpg" class="img-fluid" alt="image">
-                                   </a>
-                                   <div class="media-body">
-                                       <h5 class="mt-0 editContent"
-                                           style="outline: none; cursor: inherit;">Leia Organa</h5>
-                                       <p class="mt-2 editContent"
-                                          style="outline: none; cursor: inherit;"> Cras sit amet
-                                           nibh libero, in gravida nulla. Nulla vel metus
-                                           scelerisque ante sollicitudin. Cras purus odio,
-                                           vestibulum in vulputate at, tempus viverra turpis. Fusce
-                                           condimentum nunc ac nisi vulputate fringilla..</p>
-                                   </div>
-                               </div>-->
             </div>
         </div>
         {% endfor %}
