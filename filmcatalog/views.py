@@ -1,10 +1,13 @@
+from django.contrib.auth.models import User
+from django.contrib.auth.views import LoginView
 from django.db.models import Q
 from django.shortcuts import render, redirect
+from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView
 from django.views.generic.base import View
 
 from .models import Movie, Actor, Genre
-from .forms import ReviewForm
+from .forms import ReviewForm, AuthUserForm, RegisterUserForm
 
 
 class GenreYear:
@@ -27,6 +30,20 @@ class MovieDetailView(GenreYear, DetailView):
     model = Movie
     slug_field = "url"
     template_name = "movies/movie_detail.html"
+
+
+class CatalogLoginView(LoginView):
+    template_name = 'movies/login.html'
+    form_class = AuthUserForm
+    success_url = reverse_lazy('edit_page')
+
+
+class RegisterUserView(ListView):
+    model = User
+    template_name = 'movies/register_page.html'
+    form_class = RegisterUserForm
+    success_msg = 'Success!'
+
 
 
 class AddReview(View):
