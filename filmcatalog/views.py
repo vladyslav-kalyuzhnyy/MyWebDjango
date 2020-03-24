@@ -7,8 +7,6 @@ from django.views.generic.base import View
 from .models import Movie, Actor, Genre
 from .forms import ReviewForm
 
-"""AuthUserForm, RegisterUserForm"""
-
 
 class GenreYear:
     def get_genres(self):
